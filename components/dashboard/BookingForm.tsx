@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { 
   User, 
@@ -14,13 +14,13 @@ import {
   ChevronLeft,
   Stethoscope,
   Info,
-  CalendarCheck
+  CalendarCheck,
+  Loader2
 } from 'lucide-react'
 import Link from 'next/link'
 import { bookAppointment, getBookedSlots } from '@/app/dashboard/patient/appointments/new/actions'
 import { PremiumDatePicker } from '@/components/ui/PremiumDatePicker'
 import { PremiumTimePicker } from '@/components/ui/PremiumTimePicker'
-import { useEffect } from 'react'
 
 interface Hospital {
   id: number
@@ -324,6 +324,7 @@ export function BookingForm({ doctors, hospitals, error: serverError }: BookingF
           )}
 
           {/* Step 4: Confirm */}
+          {/* Step 4: Confirm */}
           {step === 4 && (
             <form action={bookAppointment} className="animate-in fade-in slide-in-from-right-4 duration-500 max-w-2xl mx-auto text-center space-y-10">
               <div>
@@ -379,6 +380,10 @@ export function BookingForm({ doctors, hospitals, error: serverError }: BookingF
                 </div>
               </div>
 
+              <div className="bg-blue-50 border border-blue-100 p-4 rounded-2xl text-center font-semibold text-blue-900 text-sm">
+                Booking Charge: <span className="font-extrabold text-blue-600 text-base">₹500.00</span>
+              </div>
+
               {/* Hidden Inputs for the Form */}
               <input type="hidden" name="hospital_id" value={selectedHospitalId} />
               <input type="hidden" name="doctor_id" value={selectedDoctorId} />
@@ -387,9 +392,9 @@ export function BookingForm({ doctors, hospitals, error: serverError }: BookingF
 
               <Button 
                 type="submit" 
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white h-16 text-xl font-bold rounded-2xl shadow-xl shadow-blue-200 transition-all hover:scale-[1.02] active:scale-95"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white h-16 text-xl font-bold rounded-2xl shadow-xl shadow-blue-200 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
               >
-                Confirm and Book Appointment
+                Pay ₹500 & Confirm Booking
               </Button>
             </form>
           )}
