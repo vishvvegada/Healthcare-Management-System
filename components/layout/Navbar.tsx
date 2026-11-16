@@ -23,20 +23,24 @@ export function Navbar() {
 
   // Check login status
   useEffect(() => {
-    const supabase = createClient()
-    
-    const checkUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      setIsLoggedIn(!!user)
-    }
-    checkUser()
+    try {
+      const supabase = createClient()
+      
+      const checkUser = async () => {
+        const { data: { user } } = await supabase.auth.getUser()
+        setIsLoggedIn(!!user)
+      }
+      checkUser()
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsLoggedIn(!!session)
-    })
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        setIsLoggedIn(!!session)
+      })
 
-    return () => {
-      subscription.unsubscribe()
+      return () => {
+        subscription.unsubscribe()
+      }
+    } catch (err) {
+      console.warn('[Navbar]: Supabase client initialization skipped:', err)
     }
   }, [])
 
